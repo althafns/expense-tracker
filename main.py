@@ -1,12 +1,26 @@
 list_expense  = []
 
 def add_expenses(expenses):
-    expense = int(input("Enter the expense: "))
+    price = int(input("Enter the amount: "))
+    category = input("Enter the category: ")
+    description = input("Enter the description: ")
+    expense = {
+        "amount":price,
+        "category":category,
+        "desc":description
+    }
     expenses.append(expense)
+    
 
 def view_expenses(expenses):
-    print("list of expense",expenses)
-    print("total expenses: ",sum(expenses))
+    if not expenses:
+        print("No expenses yet")
+        return
+    total = 0
+    for exp in expenses:
+        print(f'{exp["category"]} | ₹{exp["amount"]} | {exp["desc"]}')
+        total = total + exp["amount"]
+    print("Total expenses:", total)
 
 while(True):
     print("1. Add Expense")
