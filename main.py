@@ -1,4 +1,25 @@
+import csv
+
 list_expense  = []
+
+try:
+    with open("expenses.csv", "r") as file:
+        reader = csv.reader(file)
+
+        for row in reader:
+            if not row:
+                continue
+            
+            expense = {
+                "amount": int(row[0]),
+                "category": row[1],
+                "desc": row[2]
+            }
+            list_expense.append(expense)
+            
+
+except FileNotFoundError:
+    pass
 
 def add_expenses(expenses):
     price = int(input("Enter the amount: "))
@@ -10,6 +31,9 @@ def add_expenses(expenses):
         "desc":description
     }
     expenses.append(expense)
+    with open("expenses.csv", "a", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow([price, category, description])
     
 
 def view_expenses(expenses):
