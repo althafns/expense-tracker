@@ -44,12 +44,33 @@ def view_expenses(expenses):
     for exp in expenses:
         print(f'{exp["category"]} | ₹{exp["amount"]} | {exp["desc"]}')
         total = total + exp["amount"]
-    print("Total expenses:", total)
+    print("Total expenses:\n", total)
+
+def delete_expense(expenses):
+    if not expenses:
+        print("No expenses to delete")
+        return
+
+    for i, exp in enumerate(expenses):
+        print(i, "|", exp["category"], "|", exp["amount"], "|", exp["desc"])
+
+    index = int(input("Enter expense index to delete: "))
+    expenses.pop(index)
+
+    with open("expenses.csv", "w", newline="") as file:
+        writer = csv.writer(file)
+        for exp in expenses:
+            writer.writerow([exp["amount"], exp["category"], exp["desc"]])
+
+    print("Expense deleted \n")
+    print("After deleting")
+    view_expenses(list_expense)
 
 while(True):
     print("1. Add Expense")
     print("2. View Expenses")
     print("3. Exit")
+    print("4. Delete Expense")
 
     choose = int(input("Enter the corresponding number to choose: "))
 
@@ -60,6 +81,8 @@ while(True):
     elif(choose == 3):
         print("Exiting...")
         break
+    elif(choose == 4):
+        delete_expense(list_expense)
     else:
         print("Invalid number")
 
