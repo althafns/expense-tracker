@@ -77,6 +77,25 @@ def search_expense(expenses):
 
     if not found:
         print("Category not found\n")
+    
+def edit_expense(expenses):
+    for i, exp in enumerate(expenses):
+        print(i, "|", exp["category"], "|", exp["amount"], "|", exp["desc"])
+
+    index = int(input("Enter expense index to edit: "))
+
+    new_amount = int(input("Enter new amount: "))
+    new_category = input("Enter new category: ")
+    new_desc = input("Enter new description: ")
+
+    expenses[index]["amount"] = new_amount
+    expenses[index]["category"] = new_category
+    expenses[index]["desc"] = new_desc
+    
+    with open("expenses.csv", "w", newline="") as file:
+        writer = csv.writer(file)
+        for exp in expenses:
+            writer.writerow([exp["amount"], exp["category"], exp["desc"]])
 
 while(True):
     print("1. Add Expense")
@@ -84,6 +103,7 @@ while(True):
     print("3. Exit")
     print("4. Delete Expense")
     print("5. Search Expense")
+    print("6. Edit Expense")
 
     choose = int(input("Enter the corresponding number to choose: "))
 
@@ -98,6 +118,8 @@ while(True):
         delete_expense(list_expense)
     elif(choose == 5):
         search_expense(list_expense)
+    elif(choose == 6):
+        edit_expense(list_expense)
     else:
         print("Invalid number")
 
