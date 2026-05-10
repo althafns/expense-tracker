@@ -66,11 +66,24 @@ def delete_expense(expenses):
     print("After deleting")
     view_expenses(list_expense)
 
+def search_expense(expenses):
+    category = input("Enter category to search: ")
+    found = False
+
+    for exp in expenses:
+        if exp["category"] == category:
+            print(f'{exp["category"]} | ₹{exp["amount"]} | {exp["desc"]}')
+            found = True
+
+    if not found:
+        print("Category not found\n")
+
 while(True):
     print("1. Add Expense")
     print("2. View Expenses")
     print("3. Exit")
     print("4. Delete Expense")
+    print("5. Search Expense")
 
     choose = int(input("Enter the corresponding number to choose: "))
 
@@ -83,6 +96,8 @@ while(True):
         break
     elif(choose == 4):
         delete_expense(list_expense)
+    elif(choose == 5):
+        search_expense(list_expense)
     else:
         print("Invalid number")
 
